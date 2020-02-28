@@ -1,0 +1,8 @@
+{
+  "appId": "com.github.jcricaro",
+  "appName": "Capacitor Bootstrap",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "dist",
+  "cordova": {}
+}
