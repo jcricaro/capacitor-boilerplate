@@ -1,0 +1,43 @@
+name: Node.js CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm install
+    - run: npm run build --if-present
+    - run: npm test
+    - uses: actions/upload-artifact@v1
+      with:
+        name: dist
+        path: dist
+  
+  capacitor_build:
+    
+    runs-on: [ubuntu-latest]
+    
+    strategy:
+      matrix:
+        platform: [android]
+        
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v1
+        with:
+          name: dist
+      - name: Copy from dist file
+        run: npx cap copy ${{ matrix.platform }}
+      - run: ls -a
