@@ -52,13 +52,13 @@ jobs:
     - name: Upload to app-center
       uses: zackify/AppCenter-Github-Action@v1.0.0
       with:
-        token: 10466cce33f0b732f74eb398f7cc3f20a8f690ff
+        token: ${{ secrets.APP_CENTER_TOKEN }}
         appName: Path-Scale/Space-Revenge
-        file: /android/app/build/outputs/apk/release/app-release-unsigned.sdk
+        file: /android/app/build/outputs/apk/debug/app-debug.apk
     
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
       with:
         name: Android
-        file: /android/app/build/outputs/apk/release/app-release-unsigned.sdk
+        file: /android/app/build/outputs/apk/debug/app-debug.apk
     - run: ls -a
