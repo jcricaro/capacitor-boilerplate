@@ -50,7 +50,7 @@ jobs:
         ./gradlew assembleDebug
         
     - name: Upload to app-center
-      uses: wzieba/App-Center-action@v1.0.0
+      uses: wzieba/App-Center-action@v1
       with:
         token: 10466cce33f0b732f74eb398f7cc3f20a8f690ff
         appName: Path-Scale/Space-Revenge
