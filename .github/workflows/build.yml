@@ -33,9 +33,6 @@ jobs:
     - run: npm run build --if-present
     - run: npm test
     
-    - name: Initialize capacitor
-      run: npx cap add ${{ matrix.platform }}
-    
     - name: Copy from dist file
       run: npx cap copy ${{ matrix.platform }}
     - run: ls -a
