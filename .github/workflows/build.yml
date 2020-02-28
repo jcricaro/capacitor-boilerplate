@@ -62,5 +62,5 @@ jobs:
       uses: actions/upload-artifact@v1.0.0
       with:
         name: Android
-        file: ./android/app/build/outputs/apk/release/app-release-unsigned.apk
+        path: ./android/app/build/outputs/apk/release/app-release-unsigned.apk
     - run: ls -a
