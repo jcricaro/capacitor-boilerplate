@@ -48,22 +48,18 @@ jobs:
       run: |
         cd android
         ./gradlew assembleDebug
+  
         
-    - run: |
-        ls -a
-        cd ./android
-        ls -d * */*
-        
-#    - name: Upload to app-center
-#      uses: zackify/AppCenter-Github-Action@v1.0.0
-#      with:
-#        token: ${{ secrets.APP_CENTER_TOKEN }}
-#        appName: Path-Scale/Space-Revenge
-#        file: /android/app/build/outputs/apk/debug/app-debug.apk
+    - name: Upload to app-center
+      uses: zackify/AppCenter-Github-Action@v1.0.0
+      with:
+        token: ${{ secrets.APP_CENTER_TOKEN }}
+        appName: Path-Scale/Space-Revenge
+        file: ./android/app/build/outputs/apk/release/app-release-unsigned.apk
     
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
       with:
         name: Android
-        file: /android/app/build/outputs/apk/debug/app-debug.apk
+        file: ./android/app/build/outputs/apk/release/app-release-unsigned.apk
     - run: ls -a
