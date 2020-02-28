@@ -35,4 +35,10 @@ jobs:
     
     - name: Copy from dist file
       run: npx cap copy ${{ matrix.platform }}
+    - name: Make Gradle executable
+      run: chmod +x ./android/gradlew
+    - name: Build with gradle
+      run: ./android/gradlew build
+    - name: Build Debug APK
+      run: ./android/gradlew assembleDebug
     - run: ls -a
