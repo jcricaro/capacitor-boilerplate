@@ -1,3 +1,5 @@
+![Node.js CI](https://github.com/jcricaro/capacitor-boilerplate/workflows/Node.js%20CI/badge.svg)
+
 # capacitor-bootstrap
 
 ## Project setup
