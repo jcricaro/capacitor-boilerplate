@@ -50,7 +50,7 @@ jobs:
         ./gradlew assembleDebug
         
     - run: |
-        cd /android/app
+        cd /android
         ls -d * */*
         
 #    - name: Upload to app-center
