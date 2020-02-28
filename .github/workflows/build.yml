@@ -50,14 +50,14 @@ jobs:
         ./gradlew assembleDebug
         
     - run: |
-        ls -a /android/app/build/outputs/apk/debug
+        ls -a /android/app/build/outputs
         
-    - name: Upload to app-center
-      uses: zackify/AppCenter-Github-Action@v1.0.0
-      with:
-        token: ${{ secrets.APP_CENTER_TOKEN }}
-        appName: Path-Scale/Space-Revenge
-        file: /android/app/build/outputs/apk/debug/app-debug.apk
+#    - name: Upload to app-center
+#      uses: zackify/AppCenter-Github-Action@v1.0.0
+#      with:
+#        token: ${{ secrets.APP_CENTER_TOKEN }}
+#        appName: Path-Scale/Space-Revenge
+#        file: /android/app/build/outputs/apk/debug/app-debug.apk
     
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
