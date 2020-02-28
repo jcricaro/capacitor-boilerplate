@@ -49,6 +49,9 @@ jobs:
         cd android
         ./gradlew assembleDebug
         
+    - run: |
+        ls -a /android/app/build/outputs/apk/debug
+        
     - name: Upload to app-center
       uses: zackify/AppCenter-Github-Action@v1.0.0
       with:
