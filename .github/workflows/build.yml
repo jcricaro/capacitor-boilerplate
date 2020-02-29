@@ -61,14 +61,6 @@ jobs:
       with:
         name: Linux
         path: ./electron/dist/capacitor-app-1.0.0.AppImage
-    # - name: Upload to app-center
-    #   if: matrix.platform == 'electron'
-    #   uses: zackify/AppCenter-Github-Action@v1.0.0
-    #   with:
-    #     token: ${{ secrets.APP_CENTER_TOKEN }}
-    #     appName: Path-Scale/Social-Soy-Linux
-    #     file: ./electron/dist/capacitor-app-1.0.0.AppImage
-    #     group: Collaborators
     
     # Android specific
     - name: Build apk
@@ -78,14 +70,6 @@ jobs:
         cd android
         ./gradlew build
         ./gradlew assembleDebug
-    - name: Upload to app-center
-      if: matrix.platform == 'android'
-      uses: zackify/AppCenter-Github-Action@v1.0.0
-      with:
-        token: ${{ secrets.APP_CENTER_TOKEN }}
-        appName: Path-Scale/Social-Soy-Android
-        file: ./android/app/build/outputs/apk/release/app-release-unsigned.apk
-        group: Collaborators
     - name: Upload artifact
       if: matrix.platform == 'android'
       uses: actions/upload-artifact@v1.0.0
@@ -131,11 +115,49 @@ jobs:
         with:
           name: MacOS
           path: ./electron/dist/capacitor-app-1.0.0.dmg
-#       - name: Upload to app-center
-#         if: matrix.platform == 'electron'
-#         uses: zackify/AppCenter-Github-Action@v1.0.0
-#         with:
-#           token: ${{ secrets.APP_CENTER_TOKEN }}
-#           appName: Path-Scale/Social-Soy-MacOS
-#           file: ./electron/dist/capacitor-app-1.0.0.dmg
-#           group: Collaborators
+
+    distribute:
+      needs: [build_macos, build_ubuntu]
+      steps:
+        - name: Download artifact
+          uses: actions/download-artifact@v1.0.0
+          with:
+            name: MacOS
+
+      - name: Download artifact
+          uses: actions/download-artifact@v1.0.0
+          with:
+            name: Android
+
+      - name: Download artifact
+          uses: actions/download-artifact@v1.0.0
+          with:
+            name: Linux
+
+      - name: Upload to app-center
+        if: matrix.platform == 'electron'
+        uses: zackify/AppCenter-Github-Action@v1.0.0
+        with:
+          token: ${{ secrets.APP_CENTER_TOKEN }}
+          appName: Path-Scale/Social-Soy-MacOS
+          file: ./electron/dist/capacitor-app-1.0.0.dmg
+          group: Collaborators
+
+      - name: Upload to app-center
+        if: matrix.platform == 'android'
+        uses: zackify/AppCenter-Github-Action@v1.0.0
+        with:
+          token: ${{ secrets.APP_CENTER_TOKEN }}
+          appName: Path-Scale/Social-Soy-Android
+          file: ./android/app/build/outputs/apk/release/app-release-unsigned.apk
+          group: Collaborators
+
+      # - name: Upload to app-center
+      #   if: matrix.platform == 'electron'
+      #   uses: zackify/AppCenter-Github-Action@v1.0.0
+      #   with:
+      #     token: ${{ secrets.APP_CENTER_TOKEN }}
+      #     appName: Path-Scale/Social-Soy-Linux
+      #     file: ./electron/dist/capacitor-app-1.0.0.AppImage
+      #     group: Collaborators
+
