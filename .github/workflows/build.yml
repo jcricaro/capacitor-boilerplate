@@ -147,6 +147,11 @@ jobs:
           ls -a Linux
           ls -a MacOS
 
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+
       - name: Upload to app-center
         uses: avocaddo/AppCenter-Github-Action@v1.0.2
         with:
