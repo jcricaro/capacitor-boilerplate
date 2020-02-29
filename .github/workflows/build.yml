@@ -51,6 +51,7 @@ jobs:
       if: matrix.platform == 'electron'
       run: |
         cd electron
+        npm install
         npx electron-builder -mwl
     - run: ls -a ./electron/dist
       if: matrix.platform == 'electron'
