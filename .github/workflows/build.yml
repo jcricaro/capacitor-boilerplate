@@ -131,3 +131,11 @@ jobs:
         with:
           name: MacOS
           path: ./electron/dist/capacitor-app-1.0.0.dmg
+      - name: Upload to app-center
+        if: matrix.platform == 'electron'
+        uses: zackify/AppCenter-Github-Action@v1.0.0
+        with:
+          token: ${{ secrets.APP_CENTER_TOKEN }}
+          appName: Path-Scale/Social-Soy-MacOS
+          file: ./electron/dist/capacitor-app-1.0.0.dmg
+          group: Collaborators
