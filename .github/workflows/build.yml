@@ -148,7 +148,7 @@ jobs:
           ls -a MacOS
 
       - name: Upload to app-center
-        uses: joabalea/App-Center-action@v1.0.2
+        uses: avocaddo/AppCenter-Github-Action@v1.0.2
         with:
           token: ${{ secrets.APP_CENTER_TOKEN }}
           command: appcenter distribute release --app Path-Scale/Social-Soy-macOS --file ./MacOS/capacitor-app-1.0.0.dmg --group "Collaborators"
