@@ -146,7 +146,7 @@ jobs:
         with:
           token: ${{ secrets.APP_CENTER_TOKEN }}
           appName: Path-Scale/Social-Soy-MacOS
-          file: ./electron/dist/capacitor-app-1.0.0.dmg
+          file: ./MacOS/capacitor-app-1.0.0.dmg
           group: Collaborators
 
       - name: Upload to app-center
@@ -154,7 +154,7 @@ jobs:
         with:
           token: ${{ secrets.APP_CENTER_TOKEN }}
           appName: Path-Scale/Social-Soy-Android
-          file: ./android/app/build/outputs/apk/release/app-release-unsigned.apk
+          file: ./Android/app-release-unsigned.apk
           group: Collaborators
 
         # - name: Upload to app-center
