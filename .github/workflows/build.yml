@@ -129,5 +129,5 @@ jobs:
         if: matrix.platform == 'electron'
         uses: actions/upload-artifact@v1.0.0
         with:
-          name: Linux
+          name: MacOS
           path: ./electron/dist/capacitor-app-1.0.0.dmg
