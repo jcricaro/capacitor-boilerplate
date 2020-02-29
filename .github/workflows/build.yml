@@ -98,7 +98,7 @@ jobs:
     runs-on: [macos-latest]
     strategy:
       matrix:
-        platform: [electron]
+        platform: [electron, ios]
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
@@ -118,8 +118,15 @@ jobs:
 
       # Electron specific
       - name: Build electron
+        if: matrix.platform == 'electron'
         run: |
           cd electron
           npm install
           npx electron-builder build
       - run: ls -a ./electron/dist
+      - name: Upload artifact
+        if: matrix.platform == 'electron'
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          name: Linux
+          path: ./electron/dist/capacitor-app-1.0.0.dmg
