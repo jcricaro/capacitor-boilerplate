@@ -148,27 +148,25 @@ jobs:
           ls -a MacOS
 
       - name: Upload to app-center
-        uses: zackify/AppCenter-Github-Action@v1.0.0
+        uses: joabalea/App-Center-action@v1.0.2
         with:
           token: ${{ secrets.APP_CENTER_TOKEN }}
-          appName: Path-Scale/Social-Soy-MacOS
-          file: ./MacOS/capacitor-app-1.0.0.dmg
-          group: Collaborators
+          command: appcenter distribute release --app Path-Scale/Social-Soy-macOS --file ./MacOS/capacitor-app-1.0.0.dmg --group "Collaborators"
 
-      - name: Upload to app-center
-        uses: zackify/AppCenter-Github-Action@v1.0.0
-        with:
-          token: ${{ secrets.APP_CENTER_TOKEN }}
-          appName: Path-Scale/Social-Soy-Android
-          file: ./Android/app-release-unsigned.apk
-          group: Collaborators
+#       - name: Upload to app-center
+#         uses: zackify/AppCenter-Github-Action@v1.0.0
+#         with:
+#           token: ${{ secrets.APP_CENTER_TOKEN }}
+#           appName: Path-Scale/Social-Soy-Android
+#           file: ./Android/app-release-unsigned.apk
+#           group: Collaborators
 
-      - name: Upload to app-center
-        if: matrix.platform == 'electron'
-        uses: zackify/AppCenter-Github-Action@v1.0.0
-        with:
-          token: ${{ secrets.APP_CENTER_TOKEN }}
-          appName: Path-Scale/Social-Soy-Linux
-          file: ./Linux/capacitor-app-1.0.0.AppImage
-          group: Collaborators
+#       - name: Upload to app-center
+#         if: matrix.platform == 'electron'
+#         uses: zackify/AppCenter-Github-Action@v1.0.0
+#         with:
+#           token: ${{ secrets.APP_CENTER_TOKEN }}
+#           appName: Path-Scale/Social-Soy-Linux
+#           file: ./Linux/capacitor-app-1.0.0.AppImage
+#           group: Collaborators
 
