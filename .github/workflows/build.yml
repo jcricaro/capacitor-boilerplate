@@ -126,14 +126,14 @@ jobs:
             name: MacOS
 
         - name: Download artifact
-            uses: actions/download-artifact@v1.0.0
-            with:
-              name: Android
+          uses: actions/download-artifact@v1.0.0
+          with:
+            name: Android
 
         - name: Download artifact
-            uses: actions/download-artifact@v1.0.0
-            with:
-              name: Linux
+          uses: actions/download-artifact@v1.0.0
+          with:
+            name: Linux
 
         - name: Upload to app-center
           if: matrix.platform == 'electron'
