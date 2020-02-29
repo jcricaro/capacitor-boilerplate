@@ -25,6 +25,7 @@ jobs:
     needs: [build_web]
     
     strategy:
+      fail-fast: false
       matrix:
         platform: [android, electron]
     
