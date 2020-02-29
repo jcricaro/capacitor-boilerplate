@@ -116,7 +116,7 @@ jobs:
           name: MacOS
           path: ./electron/dist/capacitor-app-1.0.0.dmg
 
-    distribute:
+    app_center:
       runs-on: [ubuntu-latest]
       needs: [build_macos, build_ubuntu]
       steps:
