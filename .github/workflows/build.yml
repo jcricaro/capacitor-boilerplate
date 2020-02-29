@@ -3,8 +3,27 @@ name: Build
 on: [push]
 
 jobs:
+  build_web:
+    runs-on: [ubuntu-latest]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - run: npm install
+      - run: npm run build --if-present
+      - run: npm test
+      - name: Upload artifact
+        uses: actions/upload-artifact@v1.0.0
+        with:
+          name: dist
+          path: dist
+      
+      
   build_ubuntu:
     runs-on: [ubuntu-latest]
+    needs: [build_web]
     
     strategy:
       matrix:
@@ -12,15 +31,15 @@ jobs:
     
     steps:
     - uses: actions/checkout@v2
+    - name: Download artifact
+      uses: actions/download-artifact@v1.0.0
+      with:
+        name: dist
     - name: Use Node.js
       uses: actions/setup-node@v1
       with:
         node-version: 12.x
-    - run: npm install
-    - run: npm run build --if-present
-    - run: npm test
-    - name: Copy from dist file
-      run: npx cap copy ${{ matrix.platform }}
+    - run: npx cap copy ${{ matrix.platform }}
     
     # Android specific
     - name: Build apk
@@ -46,6 +65,7 @@ jobs:
         path: ./android/app/build/outputs/apk/release/app-release-unsigned.apk
       
   build_macos:
+    needs: [build_web]
     runs-on: [ubuntu-latest]
     steps:
       - run: ls -a
