@@ -25,6 +25,7 @@ jobs:
     needs: [dist]
     
     strategy:
+      fail-fast: false
       matrix:
         platform: [android, electron]
     
@@ -81,6 +82,7 @@ jobs:
     needs: [dist]
     runs-on: [macos-latest]
     strategy:
+      fail-fast: false
       matrix:
         platform: [electron, ios]
     steps:
