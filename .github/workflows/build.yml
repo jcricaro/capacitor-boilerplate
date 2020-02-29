@@ -110,6 +110,6 @@ jobs:
         run: |
           cd electron
           npm install
-          npx electron-builder build --mac
+          npx electron-builder build
       - run: ls -a ./electron/dist
         if: matrix.platform == 'electron'
