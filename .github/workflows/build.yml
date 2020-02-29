@@ -69,7 +69,7 @@ jobs:
       uses: zackify/AppCenter-Github-Action@v1.0.0
       with:
         token: ${{ secrets.APP_CENTER_TOKEN }}
-        appName: Path-Scale/Space-Revenge
+        appName: Path-Scale/Social-Soy-Android
         file: ./android/app/build/outputs/apk/release/app-release-unsigned.apk
         group: Collaborators
     - name: Upload artifact
