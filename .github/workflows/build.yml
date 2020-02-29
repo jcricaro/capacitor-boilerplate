@@ -135,7 +135,11 @@ jobs:
         with:
           name: Linux
           
-      - run: ls -a
+      - run: |
+          ls -a
+          ls -a Android
+          ls -a Linux
+          ls -a MacOS
 
       - name: Upload to app-center
         uses: zackify/AppCenter-Github-Action@v1.0.0
