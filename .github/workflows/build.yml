@@ -134,9 +134,10 @@ jobs:
         uses: actions/download-artifact@v1.0.0
         with:
           name: Linux
+          
+      - run: ls -a
 
       - name: Upload to app-center
-        if: matrix.platform == 'electron'
         uses: zackify/AppCenter-Github-Action@v1.0.0
         with:
           token: ${{ secrets.APP_CENTER_TOKEN }}
@@ -145,7 +146,6 @@ jobs:
           group: Collaborators
 
       - name: Upload to app-center
-        if: matrix.platform == 'android'
         uses: zackify/AppCenter-Github-Action@v1.0.0
         with:
           token: ${{ secrets.APP_CENTER_TOKEN }}
