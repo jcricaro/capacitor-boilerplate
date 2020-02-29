@@ -1,4 +1,4 @@
-name: Build and deploy
+name: Build
 
 on:
   push:
@@ -162,12 +162,12 @@ jobs:
           file: ./Android/app-release-unsigned.apk
           group: Collaborators
 
-        # - name: Upload to app-center
-        #   if: matrix.platform == 'electron'
-        #   uses: zackify/AppCenter-Github-Action@v1.0.0
-        #   with:
-        #     token: ${{ secrets.APP_CENTER_TOKEN }}
-        #     appName: Path-Scale/Social-Soy-Linux
-        #     file: ./electron/dist/capacitor-app-1.0.0.AppImage
-        #     group: Collaborators
+      - name: Upload to app-center
+        if: matrix.platform == 'electron'
+        uses: zackify/AppCenter-Github-Action@v1.0.0
+        with:
+          token: ${{ secrets.APP_CENTER_TOKEN }}
+          appName: Path-Scale/Social-Soy-Linux
+          file: ./Linux/capacitor-app-1.0.0.AppImage
+          group: Collaborators
 
