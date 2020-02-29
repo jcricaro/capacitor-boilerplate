@@ -4,63 +4,17 @@ on: [push]
 
 jobs:
   build:
+    runs-on: ${{ matrix.os }}
     
     strategy:
       matrix:
-        platform: [android]
-    
-    runs-on: ubuntu-latest
+        platform: [android, ios, windows, linux, macos]
+        os: [macos-latest, ubuntu-latest]
     
     steps:
     - uses: actions/checkout@v2
-    - name: Cache node modules
-      uses: actions/cache@v1
-      env:
-        cache-name: cache-node-modules
-      with:
-        path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
-        
-    - name: Use Node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: 12.x
-    - run: npm install
-    - run: npm run build --if-present
-    - run: npm test
-    
-    - name: Copy from dist file
-      run: npx cap copy ${{ matrix.platform }}
-
-    - name: Make Gradle executable
-      run: chmod +x ./android/gradlew
-
-    - name: Build with gradle
-      run: |
-        cd android
-        ./gradlew build
-
-    - name: Build Debug APK
-      run: |
-        cd android
-        ./gradlew assembleDebug
-  
-        
-    - name: Upload to app-center
-      uses: zackify/AppCenter-Github-Action@v1.0.0
-      with:
-        token: ${{ secrets.APP_CENTER_TOKEN }}
-        appName: Path-Scale/Space-Revenge
-        file: ./android/app/build/outputs/apk/release/app-release-unsigned.apk
-        group: Collaborators
-    
-    - name: Upload artifact
-      uses: actions/upload-artifact@v1.0.0
-      with:
-        name: Android
-        path: ./android/app/build/outputs/apk/release/app-release-unsigned.apk
-    - run: ls -a
+    - run: echo ${{ matrix.os }}
+  other_job:
+    runs-on: [ubuntu-latest]
+    steps:
+      - run: ls -a
