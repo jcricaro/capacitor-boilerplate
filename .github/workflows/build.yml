@@ -105,11 +105,11 @@ jobs:
       - run: npx cap copy ${{ matrix.platform }}
 
       # Electron specific
-      - name: Build electron
-        if: matrix.platform == 'electron'
-        run: |
-          cd electron
-          npm install
-          npx electron-builder --mac
-      - run: ls -a ./electron/dist
-        if: matrix.platform == 'electron'
+      # - name: Build electron
+      #   if: matrix.platform == 'electron'
+      #   run: |
+      #     cd electron
+      #     npm install
+      #     npx electron-builder --mac
+      # - run: ls -a ./electron/dist
+      #   if: matrix.platform == 'electron'
