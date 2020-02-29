@@ -124,7 +124,7 @@ jobs:
 
   app_center:
     runs-on: [ubuntu-latest]
-    needs: [build_macos, build_ubuntu]
+    needs: [dist, build_macos, build_ubuntu]
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v1.0.0
