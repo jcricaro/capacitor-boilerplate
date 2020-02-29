@@ -1,30 +1,17 @@
-name: Node.js CI
+name: Build
 
 on: [push]
 
 jobs:
-  build:
+  build_ubuntu:
+    runs-on: [ubuntu-latest]
     
     strategy:
       matrix:
-        platform: [android]
-    
-    runs-on: ubuntu-latest
+        platform: [android, electron]
     
     steps:
     - uses: actions/checkout@v2
-    - name: Cache node modules
-      uses: actions/cache@v1
-      env:
-        cache-name: cache-node-modules
-      with:
-        path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
-        
     - name: Use Node.js
       uses: actions/setup-node@v1
       with:
@@ -32,13 +19,33 @@ jobs:
     - run: npm install
     - run: npm run build --if-present
     - run: npm test
-    
     - name: Copy from dist file
       run: npx cap copy ${{ matrix.platform }}
-    - name: Make Gradle executable
-      run: chmod +x ./android/gradlew
-    - name: Build with gradle
-      run: ./android/gradlew build
-    - name: Build Debug APK
-      run: ./android/gradlew assembleDebug
-    - run: ls -a
+    
+    # Android specific
+    - name: Build apk
+      if: matrix.platform == 'android'
+      run: |
+        chmod +x ./android/gradlew
+        cd android
+        ./gradlew build
+        ./gradlew assembleDebug
+    - name: Upload to app-center
+      if: matrix.platform == 'android'
+      uses: zackify/AppCenter-Github-Action@v1.0.0
+      with:
+        token: ${{ secrets.APP_CENTER_TOKEN }}
+        appName: Path-Scale/Space-Revenge
+        file: ./android/app/build/outputs/apk/release/app-release-unsigned.apk
+        group: Collaborators
+    - name: Upload artifact
+      if: matrix.platform == 'android'
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: Android
+        path: ./android/app/build/outputs/apk/release/app-release-unsigned.apk
+      
+  build_macos:
+    runs-on: [ubuntu-latest]
+    steps:
+      - run: ls -a
