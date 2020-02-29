@@ -25,7 +25,6 @@ jobs:
     needs: [dist]
     
     strategy:
-      fail-fast: false
       matrix:
         platform: [android, electron]
     
