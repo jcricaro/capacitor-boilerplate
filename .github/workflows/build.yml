@@ -56,6 +56,14 @@ jobs:
         npx electron-builder build
     - run: ls -a ./electron/dist
       if: matrix.platform == 'electron'
+    - name: Upload to app-center
+      if: matrix.platform == 'electron'
+      uses: zackify/AppCenter-Github-Action@v1.0.0
+      with:
+        token: ${{ secrets.APP_CENTER_TOKEN }}
+        appName: Path-Scale/Social-Soy-Linux
+        file: ./electron/dist/capacitor-app-1.0.0.AppImage
+        group: Collaborators
     
     # Android specific
     - name: Build apk
@@ -82,7 +90,7 @@ jobs:
       
   build_macos:
     needs: [dist]
-    runs-on: [ubuntu-latest]
+    runs-on: [macos-latest]
     strategy:
       matrix:
         platform: [electron]
