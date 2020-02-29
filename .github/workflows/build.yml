@@ -25,6 +25,7 @@ jobs:
     needs: [dist]
     
     strategy:
+      fail-fast: false
       matrix:
         platform: [android, electron]
     
@@ -56,7 +57,7 @@ jobs:
     - run: ls -a ./electron/dist
       if: matrix.platform == 'electron'
     - name: Upload artifact
-      if: matrix.platform == 'android'
+      if: matrix.platform == 'electron'
       uses: actions/upload-artifact@v1.0.0
       with:
         name: Linux
