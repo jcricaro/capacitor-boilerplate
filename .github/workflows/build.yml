@@ -1,20 +1,51 @@
-name: Node.js CI
+name: Build
 
 on: [push]
 
 jobs:
-  build:
-    runs-on: ${{ matrix.os }}
+  build_ubuntu:
+    runs-on: [ubuntu-latest]
     
     strategy:
       matrix:
-        platform: [android, ios, windows, linux, macos]
-        os: [macos-latest, ubuntu-latest]
+        platform: [android, electron]
     
     steps:
     - uses: actions/checkout@v2
-    - run: echo ${{ matrix.os }}
-  other_job:
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+    - run: npm install
+    - run: npm run build --if-present
+    - run: npm test
+    - name: Copy from dist file
+      run: npx cap copy ${{ matrix.platform }}
+    
+    # Android specific
+    - name: Build apk
+      if: matrix.platform == 'android'
+      run: |
+        chmod +x ./android/gradlew
+        cd android
+        ./gradlew build
+        ./gradlew assembleDebug
+    - name: Upload to app-center
+      if: matrix.platform == 'android'
+      uses: zackify/AppCenter-Github-Action@v1.0.0
+      with:
+        token: ${{ secrets.APP_CENTER_TOKEN }}
+        appName: Path-Scale/Space-Revenge
+        file: ./android/app/build/outputs/apk/release/app-release-unsigned.apk
+        group: Collaborators
+    - name: Upload artifact
+      if: matrix.platform == 'android'
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: Android
+        path: ./android/app/build/outputs/apk/release/app-release-unsigned.apk
+      
+  build_macos:
     runs-on: [ubuntu-latest]
     steps:
       - run: ls -a
