@@ -105,6 +105,10 @@ jobs:
         with:
           node-version: 12.x
       - run: npx cap copy ${{ matrix.platform }}
+        
+      # IOS BUILD (the project would be at ./ios/App
+      #
+      #
 
       # Electron specific
       - name: Build electron
